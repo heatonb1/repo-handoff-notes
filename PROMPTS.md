@@ -53,6 +53,29 @@ will fail your PR if violated. After that, wait for my first task.
 
 ## Installing the enforcement layer in a fresh repo (hand to Claude Code or Codex)
 
+### Option 1 — Point at the GitHub URL (no download needed)
+
+Paste this into Claude Code or Codex while open in your project's root:
+
+```
+I want to install the Repo Handoff Notes v2 enforcement layer in this
+repo (my current working directory).
+
+Source: https://github.com/heatonb1/repo-handoff-notes
+
+Clone it to a temp folder (e.g. /tmp/rhn-source) so you have the source
+files locally, then read /tmp/rhn-source/SETUP.md and follow it
+end-to-end to install the .notes/ layer in my current directory.
+
+Ask me anything you need before destructive operations. Run commands
+yourself where you can. Tell me exactly what to paste if you need me
+to run something (especially anything that goes into Lovable's chat
+window, since you can't reach Lovable directly). Verify with the
+self-test at the end.
+```
+
+### Option 2 — Local folder (you already have the source)
+
 If you have the `notes-enforcement` folder downloaded somewhere, paste
 this into Claude Code or Codex in your project's root directory:
 

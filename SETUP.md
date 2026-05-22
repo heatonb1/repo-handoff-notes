@@ -132,6 +132,26 @@ Wait for their response before continuing.
 
 ---
 
+## Phase 2.5 — Get the source code (if you don't have it locally)
+
+If the user pointed you at a GitHub URL (e.g. `https://github.com/heatonb1/repo-handoff-notes`)
+instead of a local folder path, clone the source to a temp directory
+first. This is the most common case when the user pastes the README's
+Option A prompt.
+
+```bash
+git clone https://github.com/heatonb1/repo-handoff-notes /tmp/rhn-source
+```
+
+Treat `/tmp/rhn-source` as `<PATH-TO-NOTES-ENFORCEMENT-FOLDER>` for the
+rest of the playbook. Tell the user where you cloned it so they can
+clean it up later (or just leave it — it's small).
+
+If the user pointed you at a local folder (e.g. `~/Downloads/notes-enforcement`),
+skip this phase and use that path directly in Phase 3.
+
+---
+
 ## Phase 3 — Install
 
 Run these commands. Print each one before running so the user sees what's

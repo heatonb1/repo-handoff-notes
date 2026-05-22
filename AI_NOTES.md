@@ -14,6 +14,19 @@ post a brief cross-reference stub in the other.
 Newest entries on top. Never edit `[STATUS: PROCESSED]` entries.
 Never put secrets, tokens, or keys here. Reference secret names only.
 
+## [2026-05-22] URL-source install workflow + archive notice [STATUS: PROCESSED]
+
+<!-- id: AN-2026-05-22-002 -->
+
+**Result (post-launch update, 234c289):** Added a "Point Claude Code at the GitHub URL" install path as Option A in README + Option 1 in PROMPTS so adopters can hand the repo URL to Claude Code / Codex without first downloading a tarball. Added Phase 2.5 to SETUP.md telling the agent to clone the source to `/tmp/rhn-source` when given a URL. Added Status: Archived notice to README so adopters know support level upfront. Verified via 5-scenario live commit test (TEST 1 backend-without-notes blocks ✓, TEST 2 backend+notes+anchor passes ✓, TEST 3 missing Notes anchor blocks ✓, TEST 4 NOTES_SKIP=1 bypass passes ✓, TEST 5 frontend-without-notes blocks ✓).
+
+- **What**: Documentation refresh to make the install path self-contained when adopters point Claude Code at the public GitHub URL (no manual file download required). Plus archive-status signal.
+- **Area**: Human-facing docs (README, SETUP, PROMPTS) + AI_NOTES self-log.
+- **Files**: `README.md` (4 install options including new URL-aware Option A + archive notice), `SETUP.md` (Phase 2.5 added), `PROMPTS.md` (2-option split: URL vs local), `AI_NOTES.md` (this entry).
+- **Cross-side wiring**: None — pure documentation; `.notes/` enforcement layer unchanged. See BACKEND_NOTES.md for the unchanged-runtime confirmation.
+- **Verification**: Live commit test on /tmp victim repo proved hook + commit-msg enforcement works end-to-end. Self-test still 5/5 green.
+- **Follow-ups**: Repo to be archived post-merge — no further updates possible without unarchive cycle. Discord Buildathon community share planned.
+
 ## [2026-05-22] Initial repo scaffold — landing page and human-facing docs [STATUS: PROCESSED]
 
 <!-- id: AN-2026-05-22-001 -->
