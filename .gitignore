@@ -1,0 +1,7 @@
+# Local customization of the enforcement layer — each contributor can
+# override defaults (NOTES_MODE, path globs, etc.) without polluting the
+# shared repo. See .notes/config.sh for the defaults.
+.notesrc
+
+# macOS
+.DS_Store

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# .notes/hooks/pre-commit
+#
+# Enforces the same-commit rule from Repo Handoff Notes v2.
+# Installed to .git/hooks/pre-commit by .notes/install.sh.
+
+set -euo pipefail
+
+# Emergency bypass
+if [[ "${NOTES_SKIP:-}" == "1" ]]; then
+  echo "[notes] NOTES_SKIP=1 — bypassing same-commit check"
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# Detect surfaces from staged files
+STAGED=$(git diff --cached --name-only --diff-filter=ACMRT)
+if [[ -z "$STAGED" ]]; then
+  exit 0
+fi
+
+# Run detection and capture variable assignments
+eval "$(echo "$STAGED" | bash "$REPO_ROOT/.notes/scripts/detect-surfaces.sh")"
+
+# Export for enforce.sh
+export FRONTEND_CHANGED BACKEND_CHANGED AI_NOTES_CHANGED BACKEND_NOTES_CHANGED
+
+# Run enforcement
+bash "$REPO_ROOT/.notes/scripts/enforce.sh" commit

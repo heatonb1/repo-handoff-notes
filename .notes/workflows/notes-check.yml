@@ -1,0 +1,40 @@
+name: Repo Handoff Notes — same-commit rule
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+jobs:
+  notes-check:
+    name: Enforce notes convention
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Need history to diff BASE..HEAD
+          fetch-depth: 0
+
+      - name: Determine diff range
+        id: range
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "base=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+            echo "head=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "base=${{ github.event.before }}" >> "$GITHUB_OUTPUT"
+            echo "head=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check same-commit rule
+        run: |
+          chmod +x .notes/scripts/*.sh
+          bash .notes/scripts/check-pr.sh "${{ steps.range.outputs.base }}" "${{ steps.range.outputs.head }}"
+
+      - name: Check commit-message anchors
+        if: github.event_name == 'pull_request'
+        run: |
+          chmod +x .notes/scripts/check-commit-anchors.sh
+          bash .notes/scripts/check-commit-anchors.sh "${{ steps.range.outputs.base }}" "${{ steps.range.outputs.head }}"
